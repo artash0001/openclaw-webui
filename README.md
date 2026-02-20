@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# openclaw-webui
 
-## Getting Started
+Web dashboard for [OpenClaw](https://github.com/artash0001/openclaw) — monitor agents, sessions, costs, logs, and VPS stats from your browser.
 
-First, run the development server:
+Built with Next.js, Tailwind CSS, and Recharts.
+
+## Prerequisites
+
+- Node.js >= 18
+- npm (or pnpm / yarn)
+- A running OpenClaw instance on the same machine
+
+## Setup
+
+1. **Clone the repo:**
+
+   ```bash
+   git clone https://github.com/artash0001/openclaw-webui.git
+   cd openclaw-webui
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables:**
+
+   Create a `.env.local` file in the project root:
+
+   ```bash
+   # Secret used for signing session cookies (generate a random string)
+   NEXTAUTH_SECRET=your-random-secret-here
+
+   # Password for the web UI login page
+   WEBUI_PASSWORD=your-password-here
+   ```
+
+   You can generate a secret with:
+
+   ```bash
+   openssl rand -hex 32
+   ```
+
+4. **Start the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) and log in with the password you set.
+
+## Production
+
+Build and start the production server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+By default the server runs on port 3000. Set the `PORT` environment variable to change it.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                  # Next.js App Router pages
+│   ├── agents/           # Agent list and detail views
+│   ├── api/              # API routes (logs, VPS stats, config, gateway proxy)
+│   ├── config/           # Configuration viewer
+│   ├── costs/            # Usage cost charts
+│   ├── logs/             # Log viewer
+│   ├── login/            # Login page
+│   ├── sessions/         # Session list
+│   └── vps/              # VPS resource monitoring
+├── components/           # Shared UI components (dashboard, charts, nav)
+├── lib/                  # Auth, gateway RPC client, formatting utilities
+└── middleware.ts          # Session verification middleware
+```
 
-## Learn More
+## Linting
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+```
